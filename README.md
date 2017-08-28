@@ -1,4 +1,4 @@
-# Node Application
+# Store Application
 A node application built with pug, express and node. Map stuff is in it.
 
 ## To use:
@@ -11,7 +11,7 @@ A node application built with pug, express and node. Map stuff is in it.
 ## You should have installed (most recent versions):
 
 * Node
-* MongoDB or use mlab
+* MongoDB localhost or use mlab
 * Express
 
 
