@@ -11,7 +11,8 @@ const storeSchema = new mongoose.Schema({
     slug: String,
     Description:{
         type: String,
-        trim: true
+        trim: true,
+        required: 'Descriptions help tell more about this.'
     },
     tags: [String]
 });
