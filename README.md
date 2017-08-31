@@ -1,5 +1,5 @@
 # Store Application
-A node application built with pug, express and node. Map stuff is in it.
+A node app built with pug, express and node. Map stuff is in it.
 
 ## To use:
 * Clone the repo: `git clone https://github.com/bayoishola20/learnnode.git`
