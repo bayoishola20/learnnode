@@ -12,12 +12,12 @@ const storeSchema = new mongoose.Schema({
     Description:{
         type: String,
         trim: true,
-        required: 'Descriptions help tell more about this.'
+        // required: 'Descriptions help tell more about this.'
     },
     tags: [String]
 });
 
-storeSchema.pre('save', (next) => {
+storeSchema.pre('save', function(next) {
     if (!this.isModified('name')) {
         next(); //Skip
         return; //stops function from running further
