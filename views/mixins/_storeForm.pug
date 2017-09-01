@@ -1,10 +1,9 @@
 mixin storeForm(store = {})
     form(action="/add" method="POST" class="card")
-        //- ectype is to handle our uploads
-        //- Name input
+
         label(for="name") Name
         input(type="text" name="name")
-        //- Description input
+
         label(for="description") Description
         textarea(name="description")
         //- Tags ===> JavaScript loop function
@@ -14,5 +13,5 @@ mixin storeForm(store = {})
                 .tag.tag__choice
                     input(type="checkbox" id=choice value=choice name="tags")
                     label(for=choice) #{choice}
-        input(type="submit" value="Save" class="button")
+        input(type="submit" value="Save →" class="button")
             

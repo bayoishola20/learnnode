@@ -21,3 +21,10 @@ exports.createStore = async (req, res) => {
     res.redirect(`/store/${store.slug}`);
 
 };
+
+exports.getStores = async (req, res) => {
+    // Query database ad display all stores
+    const stores = await Store.find();
+    console.log(stores);
+    res.render('stores', { title: 'stores', stores: stores });
+}

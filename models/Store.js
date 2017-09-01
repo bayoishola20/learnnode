@@ -9,10 +9,9 @@ const storeSchema = new mongoose.Schema({
         required: 'Please enter a valid store name.'
     },
     slug: String,
-    Description:{
+    description:{
         type: String,
-        trim: true,
-        // required: 'Descriptions help tell more about this.'
+        trim: true
     },
     tags: [String]
 });
