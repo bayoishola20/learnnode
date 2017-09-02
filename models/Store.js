@@ -14,7 +14,25 @@ const storeSchema = new mongoose.Schema({
         trim: true,
         // required: 'Please enter a helpful description.'
     },
-    tags: [String]
+    tags: [String],
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    location: {
+        type: {
+            type: String,
+            default: 'Point'
+            },
+        coordinates: [{
+            type: Number,
+            required: 'You must supply coordinates'
+            }],
+        address: {
+            type: String,
+            required: 'Kindly provide an address'
+            }
+    }
 });
 
 storeSchema.pre('save', function(next) {
