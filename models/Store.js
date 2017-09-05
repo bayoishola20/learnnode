@@ -11,8 +11,7 @@ const storeSchema = new mongoose.Schema({
     slug: String,
     description:{
         type: String,
-        trim: true,
-        // required: 'Please enter a helpful description.'
+        trim: true
     },
     tags: [String],
     created: {
