@@ -40,10 +40,10 @@ exports.editStore = async (req, res) => {
 exports.updateStore= async (req, res) => {
     // find and update store
     const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
-        new: true, //returns update and instead of old
-        runValidators: true,
+        new: true, //returns update instead of old after findOneAndUpdate
+        runValidators: true, // runs validators like required
     }).exec();
-    req.flash('success', `Successfully updated <em>${store.name}</em> <a href="/stores/${store.slug}">. View → </a> `);
+    req.flash('success', `Successfully updated <strong>${store.name}</strong> <a href="/stores/${store.slug}">. View → </a> `);
     // redirect user to say it worked
     res.redirect(`/stores/${store._id}/edit`);
 
