@@ -61,7 +61,7 @@ exports.getStores = async (req, res) => {
     const stores = await Store.find();
     // console.log(stores);
     res.render('stores', { title: 'stores', stores: stores });
-}
+};
 
 exports.editStore = async (req, res) => {
     // Find the store given the id
@@ -69,7 +69,7 @@ exports.editStore = async (req, res) => {
     // Access control-  confirm if editor is store owner
     //render edit for so owner can update edit
     res.render('editStore', { title: `Edit → ${store.name}`, store: store });
-}
+};
 
 exports.updateStore= async (req, res) => {
     //Set location data to point
@@ -84,16 +84,23 @@ exports.updateStore= async (req, res) => {
     // redirect user to say it worked
     res.redirect(`/stores/${store._id}/edit`);
 
-}
+};
 
 exports.getStoreBySlug = async (req, res, next) => {
     const store = await Store.findOne({ slug: req.params.slug });
     if(!store) return next();
     res.render('store', { store, title: store.name });
-}
+};
 
 exports.getStoresByTag = async (req, res) => {
-    const tags = await Store.getTagsList();
     const tag = req.params.tag;
-    res.render('tags', { tags: tags, title: 'Tags', tag: tag });
-}
+
+    const tagQuery = tag || { $exists: true };
+    
+    const tagsPromise = Store.getTagsList();
+    const storesPromise = Store.find({ tags: tagQuery });
+    const [tags, stores] = await Promise.all([tagsPromise, storesPromise]);
+
+    // res.json(stores);
+    res.render('tags', { tags: tags, title: 'Tags', tag: tag, stores: stores });
+};
