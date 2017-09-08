@@ -9,7 +9,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 // Do work here
 router.get('/', storeController.homePage);
 router.get('/stores', catchErrors(storeController.getStores));
-router.get('/add', storeController.addStore);
+router.get('/add', authController.thisLoggedIn ,storeController.addStore);
 
 router.post('/add',
     storeController.upload,

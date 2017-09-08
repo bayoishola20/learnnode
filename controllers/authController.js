@@ -14,3 +14,13 @@ exports.logout = (req, res) => {
     req.flash('success', 'You are now logged out');
     res.redirect('/');
 }
+
+//protecting routes. Only opens to logged in user.
+exports.thisLoggedIn = (req, res, next) => {
+    if(req.isAuthenticated()) {
+        next(); //continue.. User is logged in
+        return;
+    }
+    req.flash('error', 'You need to be logged in')
+    res.redirect('/login');
+}
