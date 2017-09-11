@@ -9,8 +9,9 @@ const { catchErrors } = require('../handlers/errorHandlers');
 // Do work here
 router.get('/', storeController.homePage);
 router.get('/stores', catchErrors(storeController.getStores));
-router.get('/add', authController.thisLoggedIn ,storeController.addStore);
+router.get('/add', authController.thisLoggedIn ,storeController.addStore); //check if logged in before granting brlow rights.
 
+//add store
 router.post('/add',
     storeController.upload,
     catchErrors(storeController.resize),
@@ -40,5 +41,9 @@ router.post('/register',
 );
 
 router.get('/logout', authController.logout);
+
+router.get('/account', authController.thisLoggedIn, userController.account);
+
+router.post('/account', catchErrors(userController.updateAccount));
 
 module.exports = router;
