@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const promisify = require('es6-promisify');
+const mail = require('../handlers/mail');
 
 //strategy to check if you are allowed to log in.
 //local or facebook or github,....
@@ -42,8 +43,13 @@ exports.forgot = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000; //I hour from now
     await user.save();
     //Send an email containing the token
-    const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`
-    req.flash('success', `Kindly check your email to reset your password.${resetURL}`);
+    const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`;
+    await mail.send({
+        user,
+        subject: 'Password reset',
+        resetURL: resetURL
+    });
+    req.flash('success', `Kindly check your email to reset your password.`);
     //redirect to login
     res.redirect('/login');
 }
