@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const juice = require('juice');
+const juice = require('juice'); //this inlines css
 const pug = require('pug');
 const htmlToText = require('html-to-text');
 const promisify = require('es6-promisify');
@@ -14,19 +14,22 @@ const transport = nodemailer.createTransport({
 });
 
 const generateHTML = (filename, options = {}) => {
-   const html = pug.renderFile(`${__dirname}/../../views/email/${filename}.pug`, options);
-   console.log(html);
-   return html;
+   const html = pug.renderFile(`${__dirname}/../views/email/${filename}.pug`, options);
+   /*console.log(html);
+   return html;*/
+   const inlined = juice(html);
+   return inlined;
 }
 
 exports.send = async (options) => {
     const html = generateHTML(options.filename, options);
+    const text = htmlToText.fromString(html);
     const mailOptions = {
         from: `bayoishola20 <noreply@bayoishola20.com`,
         to: options.user.email,
         subject: options.subject,
         html: html,
-        text: 'From store  app'
+        text: text
 
     };
     const sendMail = promisify(transport.sendMail, transport);
