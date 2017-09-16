@@ -32,6 +32,11 @@ const storeSchema = new mongoose.Schema({
             type: String,
             required: 'Kindly provide an address'
             }
+    },
+    author: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: 'You must supply an author'
     }
 });
 
