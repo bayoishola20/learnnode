@@ -139,13 +139,17 @@ exports.mapStores = async (req, res) => {
             $near: {
                 $geometry: {
                     type: 'Point',
-                    coordinates: coordinates
+                    coordinates
                 },
                 $maxDistance: 10000 // 10km
             }
         }
     };
 
-    const stores = await Store.find(q).select('slug description name location').limit(10);
+    const stores = await Store.find(q).select('photo slug description name location').limit(10);
     res.json(stores);
+};
+
+exports.mapPage = async (req, res) => {
+    res.render('map', { title: 'Map'});
 };
