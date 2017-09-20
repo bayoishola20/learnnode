@@ -11,7 +11,8 @@ const { catchErrors } = require('../handlers/errorHandlers');
 // Do work here
 router.get('/', storeController.homePage);
 router.get('/stores', catchErrors(storeController.getStores));
-router.get('/add', authController.thisLoggedIn ,storeController.addStore); //check if logged in before granting brlow rights.
+router.get('/stores/page/:page', catchErrors(storeController.getStores));
+router.get('/add', authController.thisLoggedIn ,storeController.addStore); //check if logged in before granting below rights.
 
 //add store
 router.post('/add',
@@ -58,6 +59,9 @@ router.get('/map', storeController.mapPage);
 
 router.get('/hearts', authController.thisLoggedIn, catchErrors(storeController.getHearts));
 router.post('/reviews/:id', authController.thisLoggedIn, catchErrors(reviewController.addReview));
+
+//Top stores rating
+router.get('/top', catchErrors(storeController.getTopStores));
 
 // API endpoints
 router.get('/api/search', catchErrors(storeController.searchStores));

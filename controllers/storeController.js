@@ -59,10 +59,19 @@ exports.createStore = async (req, res) => {
 };
 
 exports.getStores = async (req, res) => {
+    const page = req.params.page || 1;
+    const limit = 6;
+    const skip = (page * limit) - limit;
     // Query database ad display all stores
-    const stores = await Store.find();
-    // console.log(stores);
-    res.render('stores', { title: 'stores', stores: stores });
+    const storesPromise = await Store.find().skip(skip).limit(limit);
+
+    const countPromise = Store.count();
+    
+    const [stores, count] = await Promise.all([storesPromise, countPromise]);
+
+    const pages = Math.ceil(count / limit);
+
+    res.render('stores', { title: 'stores', stores: stores, page, pages, count });
 };
 
 // Check if user owns the store
@@ -172,4 +181,11 @@ exports.getHearts = async (req, res) => {
        _id: { $in: req.user.hearts } 
     });
     res.render('stores', { title: 'Favourites', stores: stores });
+}
+
+// Get top stores
+exports.getTopStores = async (req, res) => {
+    const stores = await Store.getTopStores();
+    // res.json(stores);
+    res.render('topStores', { stores: stores, title: 'Top Stores!' });
 }
