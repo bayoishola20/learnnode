@@ -63,13 +63,19 @@ exports.getStores = async (req, res) => {
     const limit = 6;
     const skip = (page * limit) - limit;
     // Query database ad display all stores
-    const storesPromise = await Store.find().skip(skip).limit(limit);
+    const storesPromise = await Store.find().skip(skip).limit(limit).sort( {created: 'desc'} );
 
     const countPromise = Store.count();
     
     const [stores, count] = await Promise.all([storesPromise, countPromise]);
 
     const pages = Math.ceil(count / limit);
+
+    if(!stores.length && skip) {
+        req.flash('info', `Page ${page} isn't available. Redirected to page ${pages}`);
+        res.redirect(`/stores/page/${pages}`);
+        return;
+    }
 
     res.render('stores', { title: 'stores', stores: stores, page, pages, count });
 };
