@@ -106,7 +106,7 @@ exports.updateStore= async (req, res) => {
         new: true, //returns update instead of old after findOneAndUpdate
         runValidators: true, // runs validators like required
     }).exec();
-    req.flash('success', `Successfully updated <strong>${store.name}</strong> <a href="/stores/${store.slug}">. View → </a> `);
+    req.flash('success', `Successfully updated <strong>${store.name}</strong> <a href="/store/${store.slug}">. View → </a> `);
     // redirect user to say it worked
     res.redirect(`/stores/${store._id}/edit`);
 
